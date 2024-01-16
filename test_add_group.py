@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest
 
 
 class TestAddGroup(unittest.TestCase):
@@ -15,15 +12,23 @@ class TestAddGroup(unittest.TestCase):
 
     def test_add_group(self):
         dw = self.dw
-        dw.get("http://localhost/addressbook/")
-        dw.find_element_by_name("user").click()
-        dw.find_element_by_name("user").clear()
-        dw.find_element_by_name("user").send_keys("admin")
-        dw.find_element_by_name("pass").clear()
-        dw.find_element_by_name("pass").send_keys("secret")
-        dw.find_element_by_xpath("//input[@value='Login']").click()
-        dw.find_element_by_link_text("groups").click()
+        self.open_home_page(dw)
+        self.login(dw)
+        self.open_groups_page(dw)
+        self.create_group(dw)
+        self.return_to_groups_page(dw)
+        self.logout(dw)
+
+    def logout(self, dw):
+        dw.find_element_by_link_text("Logout").click()
+
+    def return_to_groups_page(self, dw):
+        dw.find_element_by_link_text("group page").click()
+
+    def create_group(self, dw):
+        # init group creation
         dw.find_element_by_name("new").click()
+        # fill group form
         dw.find_element_by_name("group_name").click()
         dw.find_element_by_name("group_name").clear()
         dw.find_element_by_name("group_name").send_keys("testt")
@@ -33,9 +38,22 @@ class TestAddGroup(unittest.TestCase):
         dw.find_element_by_name("group_footer").click()
         dw.find_element_by_name("group_footer").clear()
         dw.find_element_by_name("group_footer").send_keys("terds")
+        # submit group creation
         dw.find_element_by_name("submit").click()
-        dw.find_element_by_link_text("group page").click()
-        dw.find_element_by_link_text("Logout").click()
+
+    def open_groups_page(self, dw):
+        dw.find_element_by_link_text("groups").click()
+
+    def login(self, dw):
+        dw.find_element_by_name("user").click()
+        dw.find_element_by_name("user").clear()
+        dw.find_element_by_name("user").send_keys("admin")
+        dw.find_element_by_name("pass").clear()
+        dw.find_element_by_name("pass").send_keys("secret")
+        dw.find_element_by_xpath("//input[@value='Login']").click()
+
+    def open_home_page(self, dw):
+        dw.get("http://localhost/addressbook/")
 
     def is_element_present(self, how, what):
         try:
