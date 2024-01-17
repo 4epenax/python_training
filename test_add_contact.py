@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
+from contact import Contact
 
 
 class TestAddContact(unittest.TestCase):
@@ -15,11 +16,13 @@ class TestAddContact(unittest.TestCase):
         dw = self.dw
         self.open_home_page(dw)
         self.login(dw, username="admin", password="secret")
-        self.create_contact(dw, firstname="qwe", middlename="wea", lastname="qwe", nickname="123", title="asd",
-                            company="asd", address="fsd", homephone="123", mobilephone="asd", workphone="zcx",
-                            fax="312", email="qwe1",
-                            email2="123q", email3="e12e", homepage="31wea", bday="13", bmonth="September", byear="1990",
-                            aday="13", amonth="November", ayear="2020")
+        self.create_contact(dw, Contact(firstname="qwe", middlename="wea", lastname="qwe", nickname="123", title="asd",
+                                        company="asd", address="fsd", homephone="123", mobilephone="asd",
+                                        workphone="zcx",
+                                        fax="312", email="qwe1",
+                                        email2="123q", email3="e12e", homepage="31wea", bday="13", bmonth="September",
+                                        byear="1990",
+                                        aday="13", amonth="November", ayear="2020"))
         self.return_to_home_page(dw)
         self.logout(dw)
 
@@ -29,75 +32,73 @@ class TestAddContact(unittest.TestCase):
     def return_to_home_page(self, dw):
         dw.find_element_by_link_text("home page").click()
 
-    def create_contact(self, dw, firstname, middlename, lastname, nickname, title, company, address, homephone,
-                       mobilephone, workphone, fax, email, email2, email3, homepage, bday, bmonth, byear, aday, amonth,
-                       ayear):
+    def create_contact(self, dw, contact):
         # init contact creation
         dw.find_element_by_link_text("add new").click()
         # fill contact form
         dw.find_element_by_name("firstname").click()
         dw.find_element_by_name("firstname").clear()
-        dw.find_element_by_name("firstname").send_keys(firstname)
+        dw.find_element_by_name("firstname").send_keys(contact.firstname)
         dw.find_element_by_name("middlename").click()
         dw.find_element_by_name("middlename").clear()
-        dw.find_element_by_name("middlename").send_keys(middlename)
+        dw.find_element_by_name("middlename").send_keys(contact.middlename)
         dw.find_element_by_name("lastname").click()
         dw.find_element_by_name("lastname").clear()
-        dw.find_element_by_name("lastname").send_keys(lastname)
+        dw.find_element_by_name("lastname").send_keys(contact.lastname)
         dw.find_element_by_name("nickname").click()
         dw.find_element_by_name("nickname").clear()
-        dw.find_element_by_name("nickname").send_keys(nickname)
+        dw.find_element_by_name("nickname").send_keys(contact.nickname)
         dw.find_element_by_name("title").click()
         dw.find_element_by_name("title").clear()
-        dw.find_element_by_name("title").send_keys(title)
+        dw.find_element_by_name("title").send_keys(contact.title)
         dw.find_element_by_name("company").click()
         dw.find_element_by_name("company").clear()
-        dw.find_element_by_name("company").send_keys(company)
+        dw.find_element_by_name("company").send_keys(contact.company)
         dw.find_element_by_name("address").click()
         dw.find_element_by_name("address").clear()
-        dw.find_element_by_name("address").send_keys(address)
+        dw.find_element_by_name("address").send_keys(contact.address)
         dw.find_element_by_name("home").click()
         dw.find_element_by_name("home").clear()
-        dw.find_element_by_name("home").send_keys(homephone)
+        dw.find_element_by_name("home").send_keys(contact.homephone)
         dw.find_element_by_name("mobile").click()
         dw.find_element_by_name("mobile").clear()
-        dw.find_element_by_name("mobile").send_keys(mobilephone)
+        dw.find_element_by_name("mobile").send_keys(contact.mobilephone)
         dw.find_element_by_name("work").click()
         dw.find_element_by_name("work").clear()
-        dw.find_element_by_name("work").send_keys(workphone)
+        dw.find_element_by_name("work").send_keys(contact.workphone)
         dw.find_element_by_name("fax").click()
         dw.find_element_by_name("fax").clear()
-        dw.find_element_by_name("fax").send_keys(fax)
+        dw.find_element_by_name("fax").send_keys(contact.fax)
         dw.find_element_by_name("email").click()
         dw.find_element_by_name("email").clear()
-        dw.find_element_by_name("email").send_keys(email)
+        dw.find_element_by_name("email").send_keys(contact.email)
         dw.find_element_by_name("email2").click()
         dw.find_element_by_name("email2").clear()
-        dw.find_element_by_name("email2").send_keys(email2)
+        dw.find_element_by_name("email2").send_keys(contact.email2)
         dw.find_element_by_name("email3").click()
         dw.find_element_by_name("email3").clear()
-        dw.find_element_by_name("email3").send_keys(email3)
+        dw.find_element_by_name("email3").send_keys(contact.email3)
         dw.find_element_by_name("homepage").click()
         dw.find_element_by_name("homepage").clear()
-        dw.find_element_by_name("homepage").send_keys(homepage)
+        dw.find_element_by_name("homepage").send_keys(contact.homepage)
         dw.find_element_by_name("bday").click()
-        Select(dw.find_element_by_name("bday")).select_by_visible_text(bday)
+        Select(dw.find_element_by_name("bday")).select_by_visible_text(contact.bday)
         dw.find_element_by_xpath("//option[@value='13']").click()
         dw.find_element_by_name("bmonth").click()
-        Select(dw.find_element_by_name("bmonth")).select_by_visible_text(bmonth)
+        Select(dw.find_element_by_name("bmonth")).select_by_visible_text(contact.bmonth)
         dw.find_element_by_xpath("//option[@value='September']").click()
         dw.find_element_by_name("byear").click()
         dw.find_element_by_name("byear").clear()
-        dw.find_element_by_name("byear").send_keys(byear)
+        dw.find_element_by_name("byear").send_keys(contact.byear)
         dw.find_element_by_name("aday").click()
-        Select(dw.find_element_by_name("aday")).select_by_visible_text(aday)
+        Select(dw.find_element_by_name("aday")).select_by_visible_text(contact.aday)
         dw.find_element_by_xpath("//div[@id='content']/form/select[3]/option[15]").click()
         dw.find_element_by_name("amonth").click()
-        Select(dw.find_element_by_name("amonth")).select_by_visible_text(amonth)
+        Select(dw.find_element_by_name("amonth")).select_by_visible_text(contact.amonth)
         dw.find_element_by_xpath("//div[@id='content']/form/select[4]/option[12]").click()
         dw.find_element_by_name("ayear").click()
         dw.find_element_by_name("ayear").clear()
-        dw.find_element_by_name("ayear").send_keys(ayear)
+        dw.find_element_by_name("ayear").send_keys(contact.ayear)
         # submit contact creation
         dw.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
 
