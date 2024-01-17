@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest
 
 
 class AddTestContact(unittest.TestCase):
@@ -18,14 +16,18 @@ class AddTestContact(unittest.TestCase):
 
     def test_add_test_contact(self):
         driver = self.driver
+        # open home page
         driver.get("http://localhost/addressbook/#")
+        # login
         driver.find_element_by_name("user").click()
         driver.find_element_by_name("user").clear()
         driver.find_element_by_name("user").send_keys("admin")
         driver.find_element_by_name("pass").clear()
         driver.find_element_by_name("pass").send_keys("secret")
         driver.find_element_by_xpath("//input[@value='Login']").click()
+        # init contact creation
         driver.find_element_by_link_text("add new").click()
+        # fill contact form
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
         driver.find_element_by_name("firstname").send_keys("qwe")
@@ -89,8 +91,11 @@ class AddTestContact(unittest.TestCase):
         driver.find_element_by_name("ayear").click()
         driver.find_element_by_name("ayear").clear()
         driver.find_element_by_name("ayear").send_keys("2020")
+        # submit contact creation
         driver.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        # return to home page
         driver.find_element_by_link_text("home page").click()
+        # logout
         driver.find_element_by_link_text("Logout").click()
 
     def is_element_present(self, how, what):
