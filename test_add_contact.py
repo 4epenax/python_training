@@ -13,15 +13,19 @@ class AddTestContact(unittest.TestCase):
 
     def test_add_test_contact(self):
         dw = self.dw
-        # open home page
-        dw.get("http://localhost/addressbook/#")
-        # login
-        dw.find_element_by_name("user").click()
-        dw.find_element_by_name("user").clear()
-        dw.find_element_by_name("user").send_keys("admin")
-        dw.find_element_by_name("pass").clear()
-        dw.find_element_by_name("pass").send_keys("secret")
-        dw.find_element_by_xpath("//input[@value='Login']").click()
+        self.open_home_page(dw)
+        self.login(dw)
+        self.create_contact(dw)
+        self.return_to_home_page(dw)
+        self.logout(dw)
+
+    def logout(self, dw):
+        dw.find_element_by_link_text("Logout").click()
+
+    def return_to_home_page(self, dw):
+        dw.find_element_by_link_text("home page").click()
+
+    def create_contact(self, dw):
         # init contact creation
         dw.find_element_by_link_text("add new").click()
         # fill contact form
@@ -90,10 +94,17 @@ class AddTestContact(unittest.TestCase):
         dw.find_element_by_name("ayear").send_keys("2020")
         # submit contact creation
         dw.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
-        # return to home page
-        dw.find_element_by_link_text("home page").click()
-        # logout
-        dw.find_element_by_link_text("Logout").click()
+
+    def login(self, dw):
+        dw.find_element_by_name("user").click()
+        dw.find_element_by_name("user").clear()
+        dw.find_element_by_name("user").send_keys("admin")
+        dw.find_element_by_name("pass").clear()
+        dw.find_element_by_name("pass").send_keys("secret")
+        dw.find_element_by_xpath("//input[@value='Login']").click()
+
+    def open_home_page(self, dw):
+        dw.get("http://localhost/addressbook/#")
 
     def is_element_present(self, how, what):
         try:
