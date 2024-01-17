@@ -6,12 +6,12 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest
 
 
-class AddTestContact(unittest.TestCase):
+class TestAddContact(unittest.TestCase):
     def setUp(self):
         self.dw = webdriver.Firefox()
         self.dw.implicitly_wait(30)
 
-    def test_add_test_contact(self):
+    def test_add_contact(self):
         dw = self.dw
         self.open_home_page(dw)
         self.login(dw, username="admin", password="secret")
