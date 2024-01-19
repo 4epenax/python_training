@@ -22,7 +22,7 @@ class TestAddContact(unittest.TestCase):
                                         fax="312", email="qwe1",
                                         email2="123q", email3="e12e", homepage="31wea", bday="13", bmonth="September",
                                         byear="1990",
-                                        aday="13", amonth="November", ayear="2020"))
+                                        aday="18", amonth="12", ayear="2020"))
         self.return_to_home_page(dw)
         self.logout(dw)
 
@@ -91,11 +91,11 @@ class TestAddContact(unittest.TestCase):
         dw.find_element_by_name("byear").clear()
         dw.find_element_by_name("byear").send_keys(contact.byear)
         dw.find_element_by_name("aday").click()
-        Select(dw.find_element_by_name("aday")).select_by_visible_text(contact.aday)
-        dw.find_element_by_xpath("//option[@value='" + contact.aday + "']").click()
+        # для поля aday в Anniversary счет идёт с -1, т.е. указывая 18 число, получаем 16
+        dw.find_element_by_xpath("//div[@id='content']/form/select[3]/option[" + contact.aday + "]").click()
         dw.find_element_by_name("amonth").click()
-        Select(dw.find_element_by_name("amonth")).select_by_visible_text(contact.amonth)
-        dw.find_element_by_xpath("//option[@value='" + contact.amonth + "']").click()
+        # для поля amonth в Anniversary счет идёт с 0, т.е. указывая 12 месяц, получаем 11(November)
+        dw.find_element_by_xpath("//div[@id='content']/form/select[4]/option[" + contact.amonth + "]").click()
         dw.find_element_by_name("ayear").click()
         dw.find_element_by_name("ayear").clear()
         dw.find_element_by_name("ayear").send_keys(contact.ayear)
