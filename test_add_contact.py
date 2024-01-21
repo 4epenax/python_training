@@ -15,12 +15,12 @@ class TestAddContact(unittest.TestCase):
     def test_add_contact(self):
         self.login(username="admin", password="secret")
         self.create_contact(Contact(firstname="qwe", middlename="wea", lastname="qwe", nickname="123", title="asd",
-                                        company="asd", address="fsd", homephone="123", mobilephone="asd",
-                                        workphone="zcx",
-                                        fax="312", email="qwe1",
-                                        email2="123q", email3="e12e", homepage="31wea", bday="13", bmonth="September",
-                                        byear="1990",
-                                        aday="18", amonth="12", ayear="2020"))
+                                    company="asd", address="fsd", homephone="123", mobilephone="asd",
+                                    workphone="zcx",
+                                    fax="312", email="qwe1",
+                                    email2="123q", email3="e12e", homepage="31wea", bday="13", bmonth="September",
+                                    byear="1990",
+                                    aday="18", amonth="12", ayear="2020"))
         self.logout()
 
     def logout(self):
