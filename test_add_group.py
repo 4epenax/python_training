@@ -12,25 +12,26 @@ class TestAddGroup(unittest.TestCase):
         self.dw.implicitly_wait(30)
 
     def test_add_group(self):
-        dw = self.dw
-        self.login(dw, username="admin", password="secret")
-        self.create_group(dw, Group(name="testt", header="resae", footer="terds"))
-        self.logout(dw)
+        self.login(username="admin", password="secret")
+        self.create_group(Group(name="testt", header="resae", footer="terds"))
+        self.logout()
 
     def test_add_empty_group(self):
-        dw = self.dw
-        self.login(dw, username="admin", password="secret")
-        self.create_group(dw, Group(name="", header="", footer=""))
-        self.logout(dw)
+        self.login(username="admin", password="secret")
+        self.create_group(Group(name="", header="", footer=""))
+        self.logout()
 
-    def logout(self, dw):
+    def logout(self):
+        dw = self.dw
         dw.find_element_by_link_text("Logout").click()
 
-    def return_to_groups_page(self, dw):
+    def return_to_groups_page(self):
+        dw = self.dw
         dw.find_element_by_link_text("group page").click()
 
-    def create_group(self, dw, group):
-        self.open_groups_page(dw)
+    def create_group(self, group):
+        dw = self.dw
+        self.open_groups_page()
         # init group creation
         dw.find_element_by_name("new").click()
         # fill group form
@@ -45,13 +46,15 @@ class TestAddGroup(unittest.TestCase):
         dw.find_element_by_name("group_footer").send_keys(group.footer)
         # submit group creation
         dw.find_element_by_name("submit").click()
-        self.return_to_groups_page(dw)
+        self.return_to_groups_page()
 
-    def open_groups_page(self, dw):
+    def open_groups_page(self):
+        dw = self.dw
         dw.find_element_by_link_text("groups").click()
 
-    def login(self, dw, username, password):
-        self.open_home_page(dw)
+    def login(self, username, password):
+        dw = self.dw
+        self.open_home_page()
         dw.find_element_by_name("user").click()
         dw.find_element_by_name("user").clear()
         dw.find_element_by_name("user").send_keys(username)
@@ -59,7 +62,8 @@ class TestAddGroup(unittest.TestCase):
         dw.find_element_by_name("pass").send_keys(password)
         dw.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_home_page(self, dw):
+    def open_home_page(self):
+        dw = self.dw
         dw.get("http://localhost/addressbook/")
 
     def is_element_present(self, how, what):
