@@ -1,4 +1,5 @@
 from selenium import webdriver
+from fixture.session import SessionHelper
 
 
 class Application:
@@ -6,20 +7,7 @@ class Application:
     def __init__(self):
         self.dw = webdriver.Firefox()
         self.dw.implicitly_wait(30)
-
-    def login(self, username, password):
-        dw = self.dw
-        self.open_home_page()
-        dw.find_element_by_name("user").click()
-        dw.find_element_by_name("user").clear()
-        dw.find_element_by_name("user").send_keys(username)
-        dw.find_element_by_name("pass").clear()
-        dw.find_element_by_name("pass").send_keys(password)
-        dw.find_element_by_xpath("//input[@value='Login']").click()
-
-    def logout(self):
-        dw = self.dw
-        dw.find_element_by_link_text("Logout").click()
+        self.session = SessionHelper(self)
 
     def open_home_page(self):
         dw = self.dw
