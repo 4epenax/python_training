@@ -29,3 +29,12 @@ class GroupHelper:
         # submit group creation
         dw.find_element_by_name("submit").click()
         self.return_to_groups_page()
+
+    def delete_first_group(self):
+        dw = self.app.dw
+        self.open_groups_page()
+        # select first group
+        dw.find_element_by_name("selected[]").click()
+        # submit deletion
+        dw.find_element_by_name("delete").click()
+        self.return_to_groups_page()
