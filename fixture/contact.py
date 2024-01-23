@@ -7,6 +7,10 @@ class ContactHelper:
         dw = self.app.dw
         dw.find_element_by_link_text("home page").click()
 
+    def open_home_page(self):
+        dw = self.app.dw
+        dw.find_element_by_link_text("home").click()
+
     def create(self, contact):
         dw = self.app.dw
         # init contact creation
@@ -76,3 +80,11 @@ class ContactHelper:
         # submit contact creation
         dw.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
         self.return_to_home_page()
+
+    def delete_first_contact(self):
+        dw = self.app.dw
+        # select first contact
+        dw.find_element_by_name("selected[]").click()
+        # submit deletion
+        dw.find_element_by_xpath("//input[@value='Delete']").click()
+        self.open_home_page()
