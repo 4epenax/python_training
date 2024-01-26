@@ -11,10 +11,18 @@ class ContactHelper:
         dw = self.app.dw
         dw.find_element_by_link_text("home").click()
 
+    def add_new_contact(self):
+        dw = self.app.dw
+        dw.find_element_by_link_text("add new").click()
+
+    def edit_contact(self):
+        dw = self.app.dw
+        dw.find_element_by_xpath("//img[@alt='Edit']").click()
+
     def create(self, contact):
         dw = self.app.dw
         # init contact creation
-        dw.find_element_by_link_text("add new").click()
+        self.add_new_contact()
         # fill contact form
         dw.find_element_by_name("firstname").click()
         dw.find_element_by_name("firstname").clear()
@@ -84,7 +92,8 @@ class ContactHelper:
     def modification_first(self, contact):
         dw = self.app.dw
         # init contact modification
-        dw.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.open_home_page()
+        self.edit_contact()
         # fill contact form
         dw.find_element_by_name("firstname").click()
         dw.find_element_by_name("firstname").clear()
@@ -154,6 +163,7 @@ class ContactHelper:
     def delete_first_contact(self):
         dw = self.app.dw
         # select first contact
+        self.open_home_page()
         dw.find_element_by_name("selected[]").click()
         # submit deletion
         dw.find_element_by_xpath("//input[@value='Delete']").click()
