@@ -19,6 +19,14 @@ class ContactHelper:
         dw = self.app.dw
         dw.find_element_by_xpath("//img[@alt='Edit']").click()
 
+    def submit_contact_creation(self):
+        dw = self.app.dw
+        dw.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+
+    def update_contact(self):
+        dw = self.app.dw
+        dw.find_element_by_name("update").click()
+
     def create(self, contact):
         dw = self.app.dw
         # init contact creation
@@ -85,8 +93,7 @@ class ContactHelper:
         dw.find_element_by_name("ayear").click()
         dw.find_element_by_name("ayear").clear()
         dw.find_element_by_name("ayear").send_keys(contact.ayear)
-        # submit contact creation
-        dw.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        self.submit_contact_creation()
         self.return_to_home_page()
 
     def modification_first(self, contact):
@@ -156,9 +163,11 @@ class ContactHelper:
         dw.find_element_by_name("ayear").click()
         dw.find_element_by_name("ayear").clear()
         dw.find_element_by_name("ayear").send_keys(contact.ayear)
-        # submit contact modification
-        dw.find_element_by_name("update").click()
+        self.update_contact()
         self.return_to_home_page()
+
+    def fill_contact_form(self, contact):
+        dw = self.app.dw
 
     def delete_first_contact(self):
         dw = self.app.dw
