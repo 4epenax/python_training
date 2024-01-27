@@ -19,4 +19,5 @@ class Application:
         dw.get("http://localhost/addressbook/#")
 
     def destroy(self):
+        self.session.logout()
         self.dw.quit()
