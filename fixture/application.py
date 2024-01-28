@@ -9,7 +9,7 @@ class Application:
     def __init__(self):
         # self.dw = webdriver.Firefox()
         self.dw = webdriver.Chrome('E:\\Home\\chromedriver.exe')
-        self.dw.implicitly_wait(30)
+        # self.dw.implicitly_wait(30)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
@@ -21,7 +21,7 @@ class Application:
         except:
             return False
 
-    def open_home_page(self):
+    def open_start_page(self):
         dw = self.dw
         dw.get("http://localhost/addressbook/#")
 
