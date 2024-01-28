@@ -33,16 +33,16 @@ class GroupHelper:
 
     def fill_form(self, group):
         dw = self.app.dw
-        # clear and fill group form
-        dw.find_element_by_name("group_name").click()
-        dw.find_element_by_name("group_name").clear()
-        dw.find_element_by_name("group_name").send_keys(group.name)
-        dw.find_element_by_name("group_header").click()
-        dw.find_element_by_name("group_header").clear()
-        dw.find_element_by_name("group_header").send_keys(group.header)
-        dw.find_element_by_name("group_footer").click()
-        dw.find_element_by_name("group_footer").clear()
-        dw.find_element_by_name("group_footer").send_keys(group.footer)
+        self.change_field_value("group_name", group.name)
+        self.change_field_value("group_header", group.header)
+        self.change_field_value("group_footer", group.footer)
+
+    def change_field_value(self, field_name, text):
+        dw = self.app.dw
+        if text is not None:
+            dw.find_element_by_name(field_name).click()
+            dw.find_element_by_name(field_name).clear()
+            dw.find_element_by_name(field_name).send_keys(text)
 
     def submit_deletion(self):
         dw = self.app.dw
