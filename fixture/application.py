@@ -14,10 +14,16 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
+    def is_valid(self):
+        try:
+            self.dw.current_url
+            return True
+        except:
+            return False
+
     def open_home_page(self):
         dw = self.dw
         dw.get("http://localhost/addressbook/#")
 
     def destroy(self):
-        self.session.logout()
         self.dw.quit()
