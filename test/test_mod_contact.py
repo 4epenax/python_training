@@ -2,7 +2,7 @@
 from model.contact import Contact
 
 
-def test_add_contact(app):
+def test_modify_contact(app):
     app.contact.open_home_page()
     app.contact.edit_contact()
     app.contact.fill_contact_form(

@@ -2,7 +2,7 @@
 from model.group import Group
 
 
-def test_add_group(app):
+def test_modify_group(app):
     app.group.open_groups_page()
     app.group.selected_first_group()
     app.group.edit()
