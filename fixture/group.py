@@ -47,3 +47,16 @@ class GroupHelper:
     def submit_deletion(self):
         dw = self.app.dw
         dw.find_element_by_name("delete").click()
+
+    def count(self):
+        dw = self.app.dw
+        self.open_groups_page()
+        return len(dw.find_elements_by_name("selected[]"))
+
+    def create(self, group):
+        dw = self.app.dw
+        self.open_groups_page()
+        self.init_group_creation()
+        self.fill_form(group)
+        self.submit_group_creation()
+        self.return_to_groups_page()
