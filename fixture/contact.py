@@ -74,3 +74,15 @@ class ContactHelper:
     def submit_deletion(self):
         dw = self.app.dw
         dw.find_element_by_xpath("//input[@value='Delete']").click()
+
+    def count(self):
+        dw = self.app.dw
+        self.open_home_page()
+        return len(dw.find_elements_by_name("selected[]"))
+
+    def create(self, contact):
+        dw = self.app.dw
+        self.add_new_contact()
+        self.fill_contact_form(contact)
+        self.submit_contact_creation()
+        self.return_to_home_page()
