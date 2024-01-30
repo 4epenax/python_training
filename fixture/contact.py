@@ -12,7 +12,8 @@ class ContactHelper:
 
     def open_home_page(self):
         dw = self.app.dw
-        dw.find_element_by_link_text("home").click()
+        if not (dw.current_url.endswith("/addressbook/") and len(dw.find_elements_by_name("add")) > 0):
+            dw.find_element_by_link_text("home").click()
 
     def add_new_contact(self):
         dw = self.app.dw
