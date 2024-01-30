@@ -12,7 +12,8 @@ class ContactHelper:
 
     def open_home_page(self):
         dw = self.app.dw
-        dw.find_element_by_link_text("home").click()
+        if not (dw.current_url.endswith("/addressbook/") and len(dw.find_elements_by_name("add")) > 0):
+            dw.find_element_by_link_text("home").click()
 
     def add_new_contact(self):
         dw = self.app.dw
@@ -31,7 +32,6 @@ class ContactHelper:
         dw.find_element_by_name("update").click()
 
     def fill_contact_form(self, contact):
-        dw = self.app.dw
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("middlename", contact.middlename)
         self.change_field_value("lastname", contact.lastname)
@@ -81,7 +81,6 @@ class ContactHelper:
         return len(dw.find_elements_by_name("selected[]"))
 
     def create(self, contact):
-        dw = self.app.dw
         self.add_new_contact()
         self.fill_contact_form(contact)
         self.submit_contact_creation()
