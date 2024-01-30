@@ -18,7 +18,6 @@ class SessionHelper:
         dw.find_element_by_link_text("Logout").click()
 
     def ensure_login(self, username, password):
-        dw = self.app.dw
         if self.is_logged_in():
             if self.is_logged_in_as(username):
                 return
@@ -27,7 +26,6 @@ class SessionHelper:
         self.login(username, password)
 
     def ensure_logout(self):
-        dw = self.app.dw
         if self.is_logged_in():
             self.logout()
 

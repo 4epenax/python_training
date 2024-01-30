@@ -31,7 +31,6 @@ class ContactHelper:
         dw.find_element_by_name("update").click()
 
     def fill_contact_form(self, contact):
-        dw = self.app.dw
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("middlename", contact.middlename)
         self.change_field_value("lastname", contact.lastname)
@@ -81,7 +80,6 @@ class ContactHelper:
         return len(dw.find_elements_by_name("selected[]"))
 
     def create(self, contact):
-        dw = self.app.dw
         self.add_new_contact()
         self.fill_contact_form(contact)
         self.submit_contact_creation()
