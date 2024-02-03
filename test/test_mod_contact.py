@@ -5,6 +5,7 @@ from model.contact import Contact
 def test_modify_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="Temp"))
+    old_groups = app.group.get_group_list()
     app.contact.open_home_page()
     app.contact.edit_contact()
     app.contact.fill_contact_form(
@@ -15,3 +16,5 @@ def test_modify_contact(app):
                 amonth="April", ayear="2011"))
     app.contact.update_contact()
     app.contact.return_to_home_page()
+    new_groups = app.group.get_group_list()
+    assert len(old_groups) == len(new_groups)
