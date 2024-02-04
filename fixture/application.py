@@ -8,21 +8,21 @@ class Application:
 
     def __init__(self):
         # self.dw = webdriver.Firefox()
-        self.dw = webdriver.Chrome('E:\\Home\\chromedriver.exe')
+        self.wd = webdriver.Chrome('E:\\Home\\chromedriver.exe')
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
     def is_valid(self):
         try:
-            self.dw.current_url
+            self.wd.current_url
             return True
         except:
             return False
 
     def open_start_page(self):
-        dw = self.dw
+        dw = self.wd
         dw.get("http://localhost/addressbook/#")
 
     def destroy(self):
-        self.dw.quit()
+        self.wd.quit()

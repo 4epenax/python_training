@@ -1,4 +1,5 @@
 from selenium.webdriver.support.ui import Select
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -7,29 +8,29 @@ class ContactHelper:
         self.app = app
 
     def return_to_home_page(self):
-        dw = self.app.dw
-        dw.find_element_by_link_text("home page").click()
+        wd = self.app.wd
+        wd.find_element_by_link_text("home page").click()
 
     def open_home_page(self):
-        dw = self.app.dw
-        if not (dw.current_url.endswith("/addressbook/") and len(dw.find_elements_by_name("add")) > 0):
-            dw.find_element_by_link_text("home").click()
+        wd = self.app.wd
+        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("add")) > 0):
+            wd.find_element_by_link_text("home").click()
 
     def add_new_contact(self):
-        dw = self.app.dw
-        dw.find_element_by_link_text("add new").click()
+        wd = self.app.wd
+        wd.find_element_by_link_text("add new").click()
 
     def edit_contact(self):
-        dw = self.app.dw
-        dw.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd = self.app.wd
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
 
     def submit_contact_creation(self):
-        dw = self.app.dw
-        dw.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        wd = self.app.wd
+        wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
 
     def update_contact(self):
-        dw = self.app.dw
-        dw.find_element_by_name("update").click()
+        wd = self.app.wd
+        wd.find_element_by_name("update").click()
 
     def fill_contact_form(self, contact):
         self.change_field_value("firstname", contact.firstname)
@@ -55,33 +56,44 @@ class ContactHelper:
         self.change_field_value("ayear", contact.ayear)
 
     def change_value(self, field_name, text):
-        dw = self.app.dw
+        wd = self.app.wd
         if text is not None:
-            dw.find_element_by_name(field_name).click()
-            Select(dw.find_element_by_name(field_name)).select_by_visible_text(text)
+            wd.find_element_by_name(field_name).click()
+            Select(wd.find_element_by_name(field_name)).select_by_visible_text(text)
 
     def change_field_value(self, field_name, text):
-        dw = self.app.dw
+        wd = self.app.wd
         if text is not None:
-            dw.find_element_by_name(field_name).click()
-            dw.find_element_by_name(field_name).clear()
-            dw.find_element_by_name(field_name).send_keys(text)
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def select_first_contact(self):
-        dw = self.app.dw
-        dw.find_element_by_name("selected[]").click()
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
 
     def submit_deletion(self):
-        dw = self.app.dw
-        dw.find_element_by_xpath("//input[@value='Delete']").click()
+        wd = self.app.wd
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
 
     def count(self):
-        dw = self.app.dw
+        wd = self.app.wd
         self.open_home_page()
-        return len(dw.find_elements_by_name("selected[]"))
+        return len(wd.find_elements_by_name("selected[]"))
 
     def create(self, contact):
         self.add_new_contact()
         self.fill_contact_form(contact)
         self.submit_contact_creation()
         self.return_to_home_page()
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        contacts = []
+        for element in wd.find_elements_by_css_selector("[name='entry']"):
+            fname = element.find_element_by_css_selector("td:nth-child(3)").text
+            lname = element.find_element_by_css_selector("td:nth-child(2)").text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(firstname=fname, lastname=lname, id=id))
+        return contacts
