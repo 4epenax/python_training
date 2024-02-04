@@ -36,7 +36,7 @@ class Contact:
 
     # преобразование сравнения результатов из машинного(по адресам памяти) в логический
     def __eq__(self, other):
-        return self.id == other.id and self.firstname == other.firstname
+        return (self.id is None or other.id is None or self.id == other.id) and self.firstname == other.firstname
 
     def id_or_max(self):
         if self.id:
