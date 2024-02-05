@@ -10,6 +10,7 @@ class ContactHelper:
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
+        self.contact_cache = None
 
     def open_home_page(self):
         wd = self.app.wd
@@ -75,6 +76,7 @@ class ContactHelper:
     def submit_deletion(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
@@ -87,13 +89,17 @@ class ContactHelper:
         self.submit_contact_creation()
         self.return_to_home_page()
 
+    # сброс кеша происходит в методе, который вызывается в конце каждого теста
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_css_selector("[name='entry']"):
-            fname = element.find_element_by_css_selector("td:nth-child(3)").text
-            lname = element.find_element_by_css_selector("td:nth-child(2)").text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(firstname=fname, lastname=lname, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_css_selector("[name='entry']"):
+                fname = element.find_element_by_css_selector("td:nth-child(3)").text
+                lname = element.find_element_by_css_selector("td:nth-child(2)").text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(firstname=fname, lastname=lname, id=id))
+        return list(self.contact_cache)

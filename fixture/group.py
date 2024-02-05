@@ -64,7 +64,7 @@ class GroupHelper:
         self.submit_group_creation()
         self.return_to_groups_page()
 
-    # сброс кеша происходит в методе "вернутся на страницу групп", который вызывается в конце каждого теста
+    # сброс кеша происходит в методе, который вызывается в конце каждого теста
     group_cache = None
 
     def get_group_list(self):
