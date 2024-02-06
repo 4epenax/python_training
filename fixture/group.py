@@ -14,7 +14,6 @@ class GroupHelper:
     def return_to_groups_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("group page").click()
-        self.group_cache = None
 
     def init_group_creation(self):
         wd = self.app.wd
@@ -23,6 +22,7 @@ class GroupHelper:
     def submit_group_creation(self):
         wd = self.app.wd
         wd.find_element_by_name("submit").click()
+        self.group_cache = None
 
     def selected_group_by_index(self, index):
         wd = self.app.wd
@@ -35,6 +35,7 @@ class GroupHelper:
     def submit_modification(self):
         wd = self.app.wd
         wd.find_element_by_name("update").click()
+        self.group_cache = None
 
     def fill_form(self, group):
         self.change_field_value("group_name", group.name)
@@ -51,6 +52,7 @@ class GroupHelper:
     def submit_deletion(self):
         wd = self.app.wd
         wd.find_element_by_name("delete").click()
+        self.group_cache = None
 
     def count(self):
         wd = self.app.wd
