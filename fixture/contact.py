@@ -10,7 +10,6 @@ class ContactHelper:
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
-        self.contact_cache = None
 
     def open_home_page(self):
         wd = self.app.wd
@@ -28,10 +27,12 @@ class ContactHelper:
     def submit_contact_creation(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        self.contact_cache = None
 
     def update_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("update").click()
+        self.contact_cache = None
 
     def fill_contact_form(self, contact):
         self.change_field_value("firstname", contact.firstname)
