@@ -24,9 +24,9 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element_by_name("submit").click()
 
-    def selected_first_group(self):
+    def selected_group_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def edit(self):
         wd = self.app.wd
