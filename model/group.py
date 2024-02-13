@@ -11,7 +11,7 @@ class Group:
 
     # человеческий вывод результата на консоль
     def __repr__(self):
-        return "%s:%s" % (self.id, self.name)
+        return "%s:%s:%s:%s" % (self.id, self.name, self.header, self.footer)
 
     # преобразование сравнения результатов из машинного(по адресам памяти) в логический
     def __eq__(self, other):
