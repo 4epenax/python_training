@@ -15,9 +15,9 @@ def random_string(prefix, maxlen):
 
 testdata = [
     Group(name=name, header=header, footer=footer)
-    for name in ["", random_string("name", 10)]
-    for header in ["", random_string("header", 20)]
-    for footer in ["", random_string("footer", 20)]
+    for name in ["", random_string("N", 10)]
+    for header in ["", random_string("H", 20)]
+    for footer in ["", random_string("F", 20)]
 ]
 
 testdatagen = [Group(name="", header="", footer="")] + [
