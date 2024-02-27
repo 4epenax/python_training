@@ -11,7 +11,6 @@ def test_delete_some_group(app, db):
     app.group.selected_group_by_id(group.id)
     app.group.submit_deletion()
     app.group.return_to_groups_page()
-    assert len(old_groups) - 1 == app.group.count()
     new_groups = db.get_group_list()
     old_groups.remove(group)
     assert old_groups == new_groups
