@@ -37,13 +37,13 @@ class DbFixture:
                 (id, firstname, middlename, lastname, nickname, title, company, address, home,
                  mobile, work, fax, email, email2, email3, homepage, bday, bmonth, byear, aday,
                  amonth, ayear) = row
-                list.append(
-                    Contact(id=str(id), firstname=firstname, middlename=middlename, lastname=lastname,
-                            nickname=nickname, title=title, company=company, address=address,
-                            homephone=home, mobilephone=mobile, workphone=work,
-                            fax=fax, email=email, email2=email2, email3=email3, homepage=homepage,
-                            bday=bday, bmonth=bmonth, byear=byear, aday=aday, amonth=amonth,
-                            ayear=ayear))
+                list.append(Contact(id=str(id), firstname=firstname, middlename=middlename,
+                                    lastname=lastname, nickname=nickname, title=title,
+                                    company=company, address=address, homephone=home,
+                                    mobilephone=mobile, workphone=work, fax=fax, email=email,
+                                    email2=email2, email3=email3, homepage=homepage, bday=bday,
+                                    bmonth=bmonth, byear=byear, aday=aday, amonth=amonth,
+                                    ayear=ayear))
         finally:
             cursor.close()
         return list
