@@ -90,6 +90,23 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contact_cache = None
 
+    def select_add_field(self):
+        wd = self.app.wd
+        wd.find_element_by_name("to_group").click()
+
+    def selected_group_option_by_id(self, id):
+        wd = self.app.wd
+        select = wd.find_element_by_name("to_group")
+        select.find_element_by_css_selector("[value='%s']" % id).click()
+
+    def select_add_to(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//input[@value='Add to']").click()
+
+    def go_to_group_page(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector('a[href="./?group=%s"]' % id).click()
+
     def count(self):
         wd = self.app.wd
         self.open_home_page()
