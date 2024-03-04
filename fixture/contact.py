@@ -183,3 +183,17 @@ class ContactHelper:
         email3 = wd.find_element_by_xpath('//*[@id="content"]/a[3]').text
         return Contact(homephone=homephone, mobilephone=mobilephone, workphone=workphone,
                        email=email, email2=email2, email3=email3)
+
+    def clear(self, s):
+        return re.sub("[() -]", "", s)
+
+    def merge_phones_like_on_home_page(self, contact):
+        return "\n".join(filter(lambda x: x != "",
+                                map(lambda x: self.clear(x),
+                                    filter(lambda x: x is not None,
+                                           [contact.homephone, contact.mobilephone, contact.workphone]))))
+
+    def merge_emails_like_on_home_page(self, contact):
+        return "\n".join(filter(lambda x: x != "",
+                                filter(lambda x: x is not None,
+                                       [contact.email, contact.email2, contact.email3])))
