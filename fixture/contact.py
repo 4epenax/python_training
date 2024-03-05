@@ -94,9 +94,18 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_name("to_group").click()
 
+    def select_field_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("group").click()
+
     def selected_group_option_by_id(self, id):
         wd = self.app.wd
         select = wd.find_element_by_name("to_group")
+        select.find_element_by_css_selector("[value='%s']" % id).click()
+
+    def selected_group_option_by_id_del(self, id):
+        wd = self.app.wd
+        select = wd.find_element_by_name("group")
         select.find_element_by_css_selector("[value='%s']" % id).click()
 
     def select_add_to(self):

@@ -3,13 +3,13 @@ from model.group import Group
 import random
 
 
-def test_add_contact_to_group(app, db, orm):
-    if len(db.get_contact_list()) == 0:
+def test_add_contact_to_group(app, orm):
+    if len(orm.get_contact_list()) == 0:
         app.contact.create(Contact(firstname="Temp"))
-    if len(db.get_group_list()) == 0:
+    if len(orm.get_group_list()) == 0:
         app.group.create(Group(name="new"))
     old_contacts = orm.get_contact_list()
-    old_groups = db.get_group_list()
+    old_groups = orm.get_group_list()
     group = random.choice(old_groups)
     contact = random.choice(old_contacts)
     old_contacts_in_group = orm.get_contacts_in_group(group)
