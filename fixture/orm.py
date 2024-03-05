@@ -12,14 +12,16 @@ class ORMFixture:
         name = Optional(str, column='group_name')
         header = Optional(str, column='group_header')
         footer = Optional(str, column='group_footer')
-        contacts = Set(lambda: ORMFixture.ORMContact, table="address_in_groups", column="id", reverse="groups", lazy=True)
+        contacts = Set(lambda: ORMFixture.ORMContact, table="address_in_groups",
+                       column="id", reverse="groups", lazy=True)
 
     class ORMContact(db.Entity):
         _table_ = 'addressbook'
         id = PrimaryKey(int, column='id')
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
-        groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts", lazy=True)
+        groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups",
+                     column="group_id", reverse="contacts", lazy=True)
 
     def __init__(self, host, name, user, password):
         self.db.bind('mysql', host=host, database=name, user=user, password=password)
@@ -28,7 +30,9 @@ class ORMFixture:
 
     def convert_groups_to_model(self, groups):
         def convert(group):
-            return Group(id=str(group.id), name=group.name, header=group.header, footer=group.footer)
+            return Group(id=str(group.id), name=group.name, header=group.header,
+                         footer=group.footer)
+
         return list(map(convert, groups))
 
     @db_session
@@ -37,7 +41,9 @@ class ORMFixture:
 
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
-            return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname)
+            return Contact(id=str(contact.id), firstname=contact.firstname,
+                           lastname=contact.lastname)
+
         return list(map(convert, contacts))
 
     @db_session
@@ -53,4 +59,5 @@ class ORMFixture:
 
     @db_session
     def get_contacts_not_in_group(self, group):
-        return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact if self.get_orm_group(group) not in c.groups))
+        return self.convert_contacts_to_model(
+            select(c for c in ORMFixture.ORMContact if self.get_orm_group(group) not in c.groups))
