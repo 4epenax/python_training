@@ -48,5 +48,18 @@ class DbFixture:
             cursor.close()
         return list
 
+    def get_inside_group(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select group_id from address_in_groups")
+            for row in cursor:
+                (group_id) = row
+                list.append(Group(id=group_id))
+        finally:
+            cursor.close()
+        return list
+
+
     def destroy(self):
         self.connection.close()
