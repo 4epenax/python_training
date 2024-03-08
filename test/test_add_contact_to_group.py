@@ -20,8 +20,4 @@ def test_add_contact_to_group(app, orm):
     app.contact.select_add_to()
     app.contact.go_to_group_page(group.id)
     new_contacts_in_group = orm.get_contacts_in_group(group)
-    assert merge_contacts(old_contacts_in_group + [contact]) == merge_contacts(new_contacts_in_group)
-
-
-def merge_contacts(contacts):
-    return "\n".join(sorted([str(contact.id) for contact in contacts]))
+    assert old_contacts_in_group + [contact] == new_contacts_in_group
