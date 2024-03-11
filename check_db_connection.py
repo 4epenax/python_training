@@ -2,10 +2,10 @@ from fixture.orm import ORMFixture
 from model.group import Group
 from fixture.db import DbFixture
 
-db = DbFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+db = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 try:
-    l = db.get_inside_group()
+    l = db.get_groups_without_contacts()
     for item in l:
         print(item)
     print(len(l))
