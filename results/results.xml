@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="17" time="45.498" timestamp="2024-03-19T13:05:23.638290" hostname="duckling"><testcase classname="test.test_add_contact" name="test_add_contact[None:fn lnXgxRDs]" time="8.938" /><testcase classname="test.test_add_contact" name="test_add_contact[None:fnb lnckg]" time="5.153" /><testcase classname="test.test_add_contact_to_group" name="test_add_contact_to_group" time="2.020" /><testcase classname="test.test_add_group" name="test_add_group[None:NhPvi::]" time="1.832" /><testcase classname="test.test_add_group" name="test_add_group[None:NhPvi1::F 58]" time="1.438" /><testcase classname="test.test_add_group" name="test_add_group[None:NhPvi2:HMKIC:]" time="1.468" /><testcase classname="test.test_add_group" name="test_add_group[None:NhPvi3:HMKIC:Frhyaej wxdJUth]" time="1.478" /><testcase classname="test.test_all_main_info" name="test_all_main_info_on_page" time="1.940"><failure message="AssertionError: assert 'ellG r\nel2D\nel3' == 'ellG  r\nel2D\nel3'&#10;  &#10;  - ellG  r&#10;  ?      -&#10;  + ellG r&#10;    el2D&#10;    el3">app = &lt;fixture.application.Application object at 0x000001987586CA00&gt;
+db = &lt;fixture.db.DbFixture object at 0x000001987586C9D0&gt;
+
+    def test_all_main_info_on_page(app, db):
+        contacts_from_home_page = sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
+        contacts_from_db = sorted(db.get_contact_list(), key=Contact.id_or_max)
+        assert contacts_from_home_page == contacts_from_db
+        for index in range(len(contacts_from_home_page)):
+            contact_from_home_page = contacts_from_home_page[index]
+            contact_from_db = contacts_from_db[index]
+            assert contact_from_home_page.firstname == contact_from_db.firstname
+            assert contact_from_home_page.lastname == contact_from_db.lastname
+            assert contact_from_home_page.address == contact_from_db.address
+            assert (contact_from_home_page.all_phones_from_home_page ==
+                    app.contact.merge_phones_like_on_home_page(contact_from_db))
+&gt;           assert (contact_from_home_page.all_emails_from_home_page ==
+                    app.contact.merge_emails_like_on_home_page(contact_from_db))
+E           AssertionError: assert 'ellG r\nel2D\nel3' == 'ellG  r\nel2D\nel3'
+E             
+E             - ellG  r
+E             ?      -
+E             + ellG r
+E               el2D
+E               el3
+
+test\test_all_main_info.py:17: AssertionError</failure></testcase><testcase classname="test.test_db_matches_ui" name="test_group_list" time="0.943" /><testcase classname="test.test_db_matches_ui" name="test_contact_list" time="0.037" /><testcase classname="test.test_del_contact" name="test_delete_first_contact" time="1.345" /><testcase classname="test.test_del_contact_to_group" name="test_del_contact_to_group" time="1.463"><failure message="IndexError: list index out of range">app = &lt;fixture.application.Application object at 0x000001987586CA00&gt;
+db = &lt;fixture.db.DbFixture object at 0x000001987586C9D0&gt;
+orm = &lt;fixture.orm.ORMFixture object at 0x00000198759D5A00&gt;
+
+    def test_del_contact_to_group(app, db, orm):
+        if len(orm.get_contact_list()) == 0:
+            app.contact.create(Contact(firstname="Temp"))
+        if len(orm.get_group_list()) == 0:
+            app.group.create(Group(name="new"))
+        if len(db.get_inside_group()) == 0:
+            old_contacts = orm.get_contacts_not_in_groups()
+            old_groups = orm.get_groups_without_contacts()
+            random_group = random.choice(old_groups)
+            random_contact = random.choice(old_contacts)
+            app.contact.open_home_page()
+            app.contact.select_contact_by_id(random_contact.id)
+            app.contact.select_add_field()
+            app.contact.selected_group_option_by_id(random_group.id)
+            app.contact.select_add_to()
+        old_groups_inside = db.get_inside_group()
+        group = random.choice(old_groups_inside)
+        app.contact.open_home_page()
+        app.contact.select_field_group()
+        app.contact.selected_group_page_option_by_id(group.id)
+        old_contacts_inside = app.contact.get_contact_list_in_group()
+&gt;       contact = random.choice(old_contacts_inside)
+
+test\test_del_contact_to_group.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;random.Random object at 0x0000019872E0D9A0&gt;, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+        # raises IndexError if seq is empty
+&gt;       return seq[self._randbelow(len(seq))]
+E       IndexError: list index out of range
+
+..\..\shiningpanda\jobs\62ae2d4d\virtualenvs\d41d8cd9\lib\random.py:346: IndexError</failure></testcase><testcase classname="test.test_del_group" name="test_delete_some_group" time="1.150" /><testcase classname="test.test_main_info" name="test_main_info_on_page" time="2.966" /><testcase classname="test.test_main_info" name="test_main_info_on_contact_view_page" time="1.381"><failure message="AttributeError: 'NoneType' object has no attribute 'group'">app = &lt;fixture.application.Application object at 0x000001987586CA00&gt;
+
+    def test_main_info_on_contact_view_page(app):
+&gt;       contact_from_view_page = app.contact.get_contact_from_view_page(0)
+
+test\test_main_info.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;fixture.contact.ContactHelper object at 0x00000198758CB6D0&gt;, index = 0
+
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+&gt;       homephone = re.search("H: (.*)", text).group(1)
+E       AttributeError: 'NoneType' object has no attribute 'group'
+
+fixture\contact.py:199: AttributeError</failure></testcase><testcase classname="test.test_mod_contact" name="test_modify_contact" time="7.150" /><testcase classname="test.test_mod_group" name="test_modify_group" time="4.441" /></testsuite></testsuites>
